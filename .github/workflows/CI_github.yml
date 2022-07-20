@@ -39,16 +39,15 @@ jobs:
         
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           context: ./
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          repository: ${{ github.repository_owner }}/simplewhale
+          tags: ghcr.io/${{ github.repository_owner }}/simplewhale:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-          tag_with_sha: true
           
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
